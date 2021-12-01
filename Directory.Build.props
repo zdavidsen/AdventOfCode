@@ -1,0 +1,10 @@
+<Project>
+  <ItemGroup>
+    <Content Include="$(MSBuildProjectDirectory)\Examples\*.txt" CopyToOutputDirectory="PreserveNewest" TargetPath="Examples\$(MSBuildProjectName)-%(FileName)%(Extension)" />
+    <Content Include="$(MSBuildProjectDirectory)\Inputs\*.txt" CopyToOutputDirectory="PreserveNewest" TargetPath="Inputs\$(MSBuildProjectName)-%(FileName)%(Extension)" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+</Project>

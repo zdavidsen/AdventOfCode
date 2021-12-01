@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Examples\Day1-Part1.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Examples\Day1-Part1.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AoC_Framework\AoC_Framework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="AoC_Framework" />
+  </ItemGroup>
+
+</Project>
