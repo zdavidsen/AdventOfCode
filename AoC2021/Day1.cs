@@ -1,6 +1,6 @@
 ﻿namespace AoC2022
 {
-  [AoCChallenge(1, 2022)]
+  [AoCChallenge(1, 2021)]
   public class Day1 : IAoCChallenge
   {
     public bool Part2Ready => false;
