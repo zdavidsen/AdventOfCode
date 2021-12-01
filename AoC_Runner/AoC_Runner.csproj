@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\**\*.csproj" Private="True" />
     <ProjectReference Remove="$(MSBuildProjectFullPath)" />
+    <ProjectReference Remove="..\2020\**\*.csproj" />
   </ItemGroup>
 
 </Project>
