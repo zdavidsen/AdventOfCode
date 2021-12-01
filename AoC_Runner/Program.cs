@@ -109,7 +109,7 @@ foreach (var challenge in challenges)
         Console.WriteLine($"Expected answer:");
         Console.WriteLine(expected);
         Console.WriteLine();
-        var answer = impl.RunPart1(input);
+        var answer = impl.RunPart2(input);
         Console.WriteLine($"Produced answer:");
         Console.WriteLine(answer);
         Console.WriteLine();
@@ -143,7 +143,7 @@ foreach (var challenge in challenges)
       var lines = File.ReadAllLines(example.FullName);
       Console.WriteLine($"Running input '{example.Name}':");
       Console.WriteLine();
-      var answer = impl.RunPart1(lines);
+      var answer = impl.RunPart2(lines);
       Console.WriteLine($"Produced answer:");
       Console.WriteLine(answer);
       Console.WriteLine();
