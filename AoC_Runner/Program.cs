@@ -83,7 +83,7 @@ foreach (var challenge in challenges)
         var answerEnd = Array.IndexOf(lines, delimiter);
         var expected = string.Join(Environment.NewLine, lines.Skip(1).Take(answerEnd - 1));
         var input =lines.Skip(answerEnd + 1);
-        Console.WriteLine($"Testing example '{example.Name}':");
+        Console.WriteLine($"Testing part 1 example '{example.Name}':");
         Console.WriteLine();
         Console.WriteLine($"Expected answer:");
         Console.WriteLine(expected);
@@ -104,7 +104,7 @@ foreach (var challenge in challenges)
         var answerEnd = Array.IndexOf(lines, delimiter);
         var expected = string.Join(Environment.NewLine, lines.Skip(1).Take(answerEnd - 1));
         var input = lines.Skip(answerEnd + 1);
-        Console.WriteLine($"Testing example '{example.Name}':");
+        Console.WriteLine($"Testing part 2 example '{example.Name}':");
         Console.WriteLine();
         Console.WriteLine($"Expected answer:");
         Console.WriteLine(expected);
@@ -120,14 +120,12 @@ foreach (var challenge in challenges)
   var inputs =
     new DirectoryInfo(inputsDir)
       .GetFiles($"{baseInputName}-Day{challenge.Attr.Day}*.txt");
-  var inP1 = inputs.Where(f => f.Name.Contains("Part1"));
-  var inP2 = inputs.Where(f => f.Name.Contains("Part2"));
-  if (inP1.Count() != 0)
+  if (inputs.Count() != 0)
   {
-    foreach (var example in inP1)
+    foreach (var input in inputs)
     {
-      var lines = File.ReadAllLines(example.FullName);
-      Console.WriteLine($"Running input '{example.Name}':");
+      var lines = File.ReadAllLines(input.FullName);
+      Console.WriteLine($"Running part 1 input '{input.Name}':");
       Console.WriteLine();
       var answer = impl.RunPart1(lines);
       Console.WriteLine($"Produced answer:");
@@ -136,12 +134,12 @@ foreach (var challenge in challenges)
       Console.WriteLine();
     }
   }
-  if (impl.Part2Ready && inP2.Count() != 0)
+  if (impl.Part2Ready && inputs.Count() != 0)
   {
-    foreach (var example in inP2)
+    foreach (var input in inputs)
     {
-      var lines = File.ReadAllLines(example.FullName);
-      Console.WriteLine($"Running input '{example.Name}':");
+      var lines = File.ReadAllLines(input.FullName);
+      Console.WriteLine($"Running part 2 input '{input.Name}':");
       Console.WriteLine();
       var answer = impl.RunPart2(lines);
       Console.WriteLine($"Produced answer:");
