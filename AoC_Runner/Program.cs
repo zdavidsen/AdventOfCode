@@ -27,7 +27,7 @@ if (month != 12)
     days.Add(i);
 }
 
-var exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+var exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
 var examplesDir = Path.Combine(exeDir, "Examples");
 var inputsDir = Path.Combine(exeDir, "Inputs");
 
@@ -81,7 +81,10 @@ foreach (var challenge in challenges)
         var lines = File.ReadAllLines(example.FullName);
         var delimiter = $"_{lines.First()}";
         var answerEnd = Array.IndexOf(lines, delimiter);
-        var expected = string.Join(Environment.NewLine, lines.Skip(1).Take(answerEnd - 1));
+        var expectedLines = lines.Skip(1).Take(answerEnd - 1).Where(l => !l.StartsWith("#"));
+        if (!expectedLines.Any())
+          continue;
+        var expected = string.Join(Environment.NewLine, expectedLines);
         var input =lines.Skip(answerEnd + 1);
         Console.WriteLine($"Testing part 1 example '{example.Name}':");
         Console.WriteLine();
@@ -102,7 +105,10 @@ foreach (var challenge in challenges)
         var lines = File.ReadAllLines(example.FullName);
         var delimiter = $"_{lines.First()}";
         var answerEnd = Array.IndexOf(lines, delimiter);
-        var expected = string.Join(Environment.NewLine, lines.Skip(1).Take(answerEnd - 1));
+        var expectedLines = lines.Skip(1).Take(answerEnd - 1).Where(l => !l.StartsWith("#"));
+        if (!expectedLines.Any())
+          continue;
+        var expected = string.Join(Environment.NewLine, expectedLines);
         var input = lines.Skip(answerEnd + 1);
         Console.WriteLine($"Testing part 2 example '{example.Name}':");
         Console.WriteLine();

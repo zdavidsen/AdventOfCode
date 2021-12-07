@@ -7,48 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Examples\Day1-Part1.txt" />
-    <None Remove="Examples\Day2-Part1.txt" />
-    <None Remove="Examples\Day2-Part2.txt" />
-    <None Remove="Examples\Day3-Part1.txt" />
-    <None Remove="Examples\Day3-Part2.txt" />
-    <None Remove="Examples\Day4-Part1.txt" />
-    <None Remove="Examples\Day4-Part2.txt" />
-    <None Remove="Examples\Day5-Part1.txt" />
-    <None Remove="Examples\Day5-Part2.txt" />
-    <None Remove="Inputs\Day1.txt" />
-    <None Remove="Inputs\Day2.txt" />
-    <None Remove="Inputs\Day3.txt" />
-    <None Remove="Inputs\Day4.txt" />
-    <None Remove="Inputs\Day5.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Examples\Day5-Part1.txt" />
-    <Content Include="Examples\Day4-Part1.txt" />
-    <Content Include="Examples\Day3-Part1.txt" />
-    <Content Include="Examples\Day2-Part1.txt" />
-    <Content Include="Examples\Day1-Part1.txt" />
-    <Content Include="Examples\Day5-Part2.txt" TargetPath="Examples\$(MSBuildProjectName)-%(FileName)%(Extension)">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Examples\Day4-Part2.txt" TargetPath="Examples\$(MSBuildProjectName)-%(FileName)%(Extension)">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Examples\Day3-Part2.txt" TargetPath="Examples\$(MSBuildProjectName)-%(FileName)%(Extension)">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Examples\Day2-Part2.txt" TargetPath="Examples\$(MSBuildProjectName)-%(FileName)%(Extension)">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Inputs\Day5.txt" />
-    <Content Include="Inputs\Day4.txt" />
-    <Content Include="Inputs\Day3.txt" />
-    <Content Include="Inputs\Day2.txt" />
-    <Content Include="Inputs\Day1.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\AoC_Framework\AoC_Framework.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,0 @@
-ANSWER
-<answer>
-_ANSWER
-<Problem input>
