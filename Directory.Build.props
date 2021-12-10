@@ -1,7 +1,7 @@
 <Project>
   <ItemGroup>
-    <Content Include="$(MSBuildProjectDirectory)\Examples\*.txt" CopyToOutputDirectory="Always" TargetPath="Examples\$(MSBuildProjectName)-%(FileName)%(Extension)" />
-    <Content Include="$(MSBuildProjectDirectory)\Inputs\*.txt" CopyToOutputDirectory="Always" TargetPath="Inputs\$(MSBuildProjectName)-%(FileName)%(Extension)" />
+    <Content Include="$(MSBuildProjectDirectory)\Examples\*.txt" CopyToOutputDirectory="PreserveNewest" TargetPath="$(MSBuildProjectName)\Examples\%(FileName)%(Extension)" />
+    <Content Include="$(MSBuildProjectDirectory)\Inputs\*.txt" CopyToOutputDirectory="PreserveNewest" TargetPath="$(MSBuildProjectName)\Inputs\%(FileName)%(Extension)" />
   </ItemGroup>
 
   <PropertyGroup>

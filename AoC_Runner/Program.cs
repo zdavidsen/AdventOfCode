@@ -28,8 +28,8 @@ if (month != 12)
 }
 
 var exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
-var examplesDir = Path.Combine(exeDir, "Examples");
-var inputsDir = Path.Combine(exeDir, "Inputs");
+//var examplesDir = Path.Combine(exeDir, "Examples");
+//var inputsDir = Path.Combine(exeDir, "Inputs");
 
 var challenges =
   new DirectoryInfo(exeDir)
@@ -63,15 +63,29 @@ var challenges =
 
 foreach (var challenge in challenges)
 {
-  var baseInputName = challenge.Type.Assembly.GetName().Name;
+  var assemblyName = challenge.Type.Assembly.GetName().Name;
+  var baseInputDir = Path.Combine(exeDir, assemblyName!);
+  if (!Directory.Exists(baseInputDir))
+  {
+    Console.Error.WriteLine($"Inputs for '{assemblyName}' do not exist; Skipping challenges");
+    continue;
+  }
+  var examplesDir = Path.Combine(baseInputDir, "Examples");
+  var inputsDir = Path.Combine(baseInputDir, "Inputs");
+
   var impl = (IAoCChallenge?)challenge.Type.GetConstructor(new Type[] { })?.Invoke(null);
   if (impl == null)
-    continue; //TODO: print error message?
+  {
+    Console.Error.WriteLine(
+      $"Unable to instantiate '{challenge.Type.FullName}' to run challenges for " +
+      $"{challenge.Attr.Year}, Day {challenge.Attr.Day}");
+    continue;
+  }
   if (runExamples)
   {
     var examples =
       new DirectoryInfo(examplesDir)
-        .GetFiles($"{baseInputName}-Day{challenge.Attr.Day}*.txt");
+        .GetFiles($"Day{challenge.Attr.Day}*.txt");
     var exP1 = examples.Where(f => f.Name.Contains("Part1"));
     var exP2 = examples.Where(f => f.Name.Contains("Part2"));
     if (exP1.Count() != 0)
@@ -125,7 +139,7 @@ foreach (var challenge in challenges)
   }
   var inputs =
     new DirectoryInfo(inputsDir)
-      .GetFiles($"{baseInputName}-Day{challenge.Attr.Day}*.txt");
+      .GetFiles($"Day{challenge.Attr.Day}*.txt");
   if (inputs.Count() != 0)
   {
     foreach (var input in inputs)
