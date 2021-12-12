@@ -81,91 +81,80 @@ foreach (var challenge in challenges)
       $"{challenge.Attr.Year}, Day {challenge.Attr.Day}");
     continue;
   }
-  if (runExamples)
-  {
-    var examples =
-      new DirectoryInfo(examplesDir)
-        .GetFiles($"Day{challenge.Attr.Day}*.txt");
-    var exP1 = examples.Where(f => f.Name.Contains("Part1"));
-    var exP2 = examples.Where(f => f.Name.Contains("Part2"));
-    if (exP1.Count() != 0)
-    {
-      foreach (var example in exP1)
-      {
-        var lines = File.ReadAllLines(example.FullName);
-        var delimiter = $"_{lines.First()}";
-        var answerEnd = Array.IndexOf(lines, delimiter);
-        var expectedLines = lines.Skip(1).Take(answerEnd - 1).Where(l => !l.StartsWith("#"));
-        if (!expectedLines.Any())
-          continue;
-        var expected = string.Join(Environment.NewLine, expectedLines);
-        var input =lines.Skip(answerEnd + 1);
-        Console.WriteLine($"Testing part 1 example '{example.Name}':");
-        Console.WriteLine();
-        Console.WriteLine($"Expected answer:");
-        Console.WriteLine(expected);
-        Console.WriteLine();
-        var answer = impl.RunPart1(input);
-        Console.WriteLine($"Produced answer:");
-        Console.WriteLine(answer);
-        Console.WriteLine();
-        Console.WriteLine();
-      }
-    }
-    if (impl.Part2Ready && exP2.Count() != 0)
-    {
-      foreach (var example in exP2)
-      {
-        var lines = File.ReadAllLines(example.FullName);
-        var delimiter = $"_{lines.First()}";
-        var answerEnd = Array.IndexOf(lines, delimiter);
-        var expectedLines = lines.Skip(1).Take(answerEnd - 1).Where(l => !l.StartsWith("#"));
-        if (!expectedLines.Any())
-          continue;
-        var expected = string.Join(Environment.NewLine, expectedLines);
-        var input = lines.Skip(answerEnd + 1);
-        Console.WriteLine($"Testing part 2 example '{example.Name}':");
-        Console.WriteLine();
-        Console.WriteLine($"Expected answer:");
-        Console.WriteLine(expected);
-        Console.WriteLine();
-        var answer = impl.RunPart2(input);
-        Console.WriteLine($"Produced answer:");
-        Console.WriteLine(answer);
-        Console.WriteLine();
-        Console.WriteLine();
-      }
-    }
-  }
+
+  var examples =
+    new DirectoryInfo(examplesDir)
+      .GetFiles($"Day{challenge.Attr.Day:D2}*.txt");
+  var exP1 = examples.Where(f => f.Name.Contains("Part1"));
+  var exP2 = examples.Where(f => f.Name.Contains("Part2"));
+
   var inputs =
     new DirectoryInfo(inputsDir)
-      .GetFiles($"Day{challenge.Attr.Day}*.txt");
+      .GetFiles($"Day{challenge.Attr.Day:D2}*.txt");
+
+  if (runExamples && exP1.Count() != 0)
+  {
+    RunChallenge(challenge, 1, true, exP1);
+  }
+
   if (inputs.Count() != 0)
   {
-    foreach (var input in inputs)
-    {
-      var lines = File.ReadAllLines(input.FullName);
-      Console.WriteLine($"Running part 1 input '{input.Name}':");
-      Console.WriteLine();
-      var answer = impl.RunPart1(lines);
-      Console.WriteLine($"Produced answer:");
-      Console.WriteLine(answer);
-      Console.WriteLine();
-      Console.WriteLine();
-    }
+    RunChallenge(challenge, 1, false, inputs);
   }
-  if (impl.Part2Ready && inputs.Count() != 0)
+
+  if (impl.Part2Ready)
   {
-    foreach (var input in inputs)
+    if (runExamples && exP2.Count() != 0)
     {
-      var lines = File.ReadAllLines(input.FullName);
-      Console.WriteLine($"Running part 2 input '{input.Name}':");
-      Console.WriteLine();
-      var answer = impl.RunPart2(lines);
-      Console.WriteLine($"Produced answer:");
-      Console.WriteLine(answer);
-      Console.WriteLine();
-      Console.WriteLine();
+      RunChallenge(challenge, 2, true, exP2);
+    }
+
+    if (inputs.Count() != 0)
+    {
+      RunChallenge(challenge, 2, false, inputs);
     }
   }
+}
+
+IAoCChallenge? GetImpl(Type type)
+{
+  return type.GetConstructor(new Type[] { })?.Invoke(null) as IAoCChallenge;
+}
+
+void RunChallenge((Type Type, AoCChallengeAttribute Attr) challenge, int part, bool isExample, IEnumerable<FileInfo> inputFiles)
+{
+  Console.WriteLine($"{challenge.Attr.Year} Day {challenge.Attr.Day} Part {part}{(isExample ? " Examples" : "")}");
+  Console.WriteLine("====================");
+  foreach (var inputFile in inputFiles)
+  {
+    Console.WriteLine($"Running '{inputFile.Name}':");
+    var impl = GetImpl(challenge.Type);
+    var lines = File.ReadAllLines(inputFile.FullName);
+    IEnumerable<string> input;
+    if (isExample)
+    {
+      var delimiter = $"_{lines.First()}";
+      var answerEnd = Array.IndexOf(lines, delimiter);
+      var expectedLines = lines.Skip(1).Take(answerEnd - 1).Where(l => !l.StartsWith("#"));
+      if (!expectedLines.Any())
+        continue;
+      var expected = string.Join(Environment.NewLine, expectedLines);
+      input = lines.Skip(answerEnd + 1);
+      Console.WriteLine($"Expected answer:");
+      Console.WriteLine(expected);
+    }
+    else
+    {
+      input = lines;
+    }
+    string answer = "";
+    if (part == 1)
+      answer = impl!.RunPart1(input);
+    if (part == 2)
+      answer = impl!.RunPart2(input);
+    Console.WriteLine($"Produced answer:");
+    Console.WriteLine(answer);
+    Console.WriteLine();
+  }
+  Console.WriteLine();
 }
