@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AoC_Framework\AoC_Framework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="AoC_Framework" />
+  </ItemGroup>
+
+</Project>
