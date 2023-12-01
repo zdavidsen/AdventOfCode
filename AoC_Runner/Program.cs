@@ -8,24 +8,27 @@ var year = DateTime.Today.Year;
 var month = DateTime.Today.Month;
 var day = DateTime.Today.Day;
 
-//year = 2021;
-//month = 12;
-//day = 1;
+// year = 2021;
+// month = 12;
+// day = 17;
 
 var runExamples = true;
 
-List<int> years = new() { year };
-List<int> days = new() { day };
+List<(int Year, int Day)> puzzlesToRun = new() { (year, day) };
 
 if (month != 12)
 {
-  years.Clear();
-  days.Clear();
-  for (int i = 2022; i <= year; i++)
-    years.Add(i);
-  for (int i = 1; i <= 25; i++)
-    days.Add(i);
+  puzzlesToRun.Clear();
+  for (int i = 2021; i <= year; i++)
+  {
+    for (int j = 1; i <= 25; j++)
+      puzzlesToRun.Add((i, j));
+  }
 }
+
+// Console.WriteLine("Attempting to run puzzles for the following days:");
+// foreach (var puzzle in puzzlesToRun)
+//   Console.WriteLine($"\t{puzzle.Year},{puzzle.Day}");
 
 var exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
 //var examplesDir = Path.Combine(exeDir, "Examples");
@@ -49,8 +52,7 @@ var challenges =
                 {
                   return 
                     t.Attr != null &&
-                    years.Contains(t.Attr.Year) &&
-                    days.Contains(t.Attr.Day) &&
+                    puzzlesToRun.Contains((t.Attr.Year, t.Attr.Day)) &&
                     t.Type.IsAssignableTo(typeof(IAoCChallenge));
                 })!;
         }
